@@ -42,8 +42,8 @@ def train(model, iterator, criterion, optimizer):
     for batch in iterator:
         optimizer.zero_grad()
 
-        text = batch['input_ids'].to(device)
-        labels = batch['labels'].to(device)
+        text = batch['input_ids'].to(model.device)
+        labels = batch['labels'].to(model.device)
 
         predictions = model(text).squeeze(1)
         loss = criterion(predictions, labels)
