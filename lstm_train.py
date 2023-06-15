@@ -33,17 +33,33 @@ class RNNClassifier(nn.Module):
             hidden = hidden[-1,:,:]
         
         return self.fc(self.dropout(hidden))
+    
+    def forward(self, text):
+        embedded = self.dropout(self.embedding(text))
+
+        # Change the order of dimensions: 
+        # (batch_size, sequence_length, input_size) -> (sequence_length, batch_size, input_size)
+        embedded = embedded.permute(1, 0, 2)  
+        
+        _, (hidden, _) = self.rnn(embedded)
+        
+        if self.rnn.bidirectional:
+            hidden = torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1)
+        else:
+            hidden = hidden[-1,:,:]
+        
+        return self.fc(self.dropout(hidden))
 
 
-def train(model, iterator, criterion, optimizer):
+def train(model, iterator, criterion, optimizer, device):
     model.train()
     epoch_loss = 0
 
     for batch in iterator:
         optimizer.zero_grad()
 
-        text = batch['input_ids'].to(model.device)
-        labels = batch['labels'].to(model.device)
+        text = batch['input_ids'].to(device)
+        labels = batch['labels'].to(device)
 
         predictions = model(text).squeeze(1)
         loss = criterion(predictions, labels)
