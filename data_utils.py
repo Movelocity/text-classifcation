@@ -49,6 +49,20 @@ class TextClassificationDataset(Dataset):
         item['labels'] = torch.tensor(self.targets[idx], dtype=torch.long)  # 将目标转换为张量
         return item
 
+def get_class_labels():
+    with open('./data/class.txt', 'r', encoding='utf-8') as f:
+        class_labels = f.read().strip().split('\n')
+    return class_labels
+
+def top_n_accuracy(df, n):
+    correct_count = 0
+    total_count = len(df)
+
+    for index, row in df.iterrows():
+        if row['label'] in row[f'pred1':f'pred{n}'].values:
+            correct_count += 1
+
+    return correct_count / total_count
 
 if __name__ == "__main__":
     if not os.path.exists("data/test.txt"):
