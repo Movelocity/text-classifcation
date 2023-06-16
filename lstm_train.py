@@ -174,5 +174,5 @@ if __name__ == "__main__":
 
     test_dataset = data_utils.TextClassificationDataset("data/test.txt", tokenizer)
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
-    evaluate(model, val_loader)
+    evaluate(model, test_loader)
 
