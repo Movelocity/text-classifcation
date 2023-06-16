@@ -3,6 +3,7 @@ from torch import nn
 import pandas as pd
 import data_utils
 from transformers import BertTokenizer
+from torch.utils.data.dataloader import DataLoader
 
 class RNNClassifier(nn.Module):
     def __init__(
