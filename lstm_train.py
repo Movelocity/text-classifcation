@@ -172,7 +172,7 @@ if __name__ == "__main__":
 
     torch.save(model.state_dict(), f"model-{args.layers}.pth")
 
-    test_dataset = data_utils.TextClassificationDataset("data/test.txt")
+    test_dataset = data_utils.TextClassificationDataset("data/test.txt", tokenizer)
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
     evaluate(model, val_loader)
 
