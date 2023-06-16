@@ -81,7 +81,8 @@ def evaluate(model, val_loader):
 
         count += 1
         print(f"\r{count/total*100:.3f} %, {count}", end="", flush=True)
-
+    print("")
+    
     df = pd.DataFrame({
         "text": texts,
         "label": [int(l) for l in labels],
