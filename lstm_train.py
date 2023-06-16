@@ -93,9 +93,9 @@ def evaluate(model, val_loader):
     })
     df.to_csv("eval_result.csv")
 
-    top1_accuracy = top_n_accuracy(df, 1)
-    top3_accuracy = top_n_accuracy(df, 3)
-    top5_accuracy = top_n_accuracy(df, 5)
+    top1_accuracy = data_utils.top_n_accuracy(df, 1)
+    top3_accuracy = data_utils.top_n_accuracy(df, 3)
+    top5_accuracy = data_utils.top_n_accuracy(df, 5)
 
     print(f'Top1 Accuracy: {top1_accuracy:.2f}')
     print(f'Top3 Accuracy: {top3_accuracy:.2f}')
